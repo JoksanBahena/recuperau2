@@ -1,0 +1,31 @@
+use recuperau2;
+
+create table profesores(
+	curp varchar(20) not null PRIMARY KEY,
+	nombre varchar(20) not null,
+    apellido varchar(30) not null,
+    fechaNac varchar(30) not null,
+    numEmpleado int not null
+);
+
+create table estudiantes(
+	curpProfesor varchar(20) not null,
+	nombre varchar(20) not null,
+    apellido varchar(30) not null,
+    fechaNac varchar(30) not null,
+    curp varchar(20) not null PRIMARY KEY,
+    matricula varchar(10) not null unique,
+    FOREIGN KEY (curpProfesor) REFERENCES profesores(curp)
+);
+
+create table calificaciones(
+	id bigint PRIMARY KEY AUTO_INCREMENT,
+    materia varchar(20) not null,
+    calificacion int not null,
+    curpEstudiante varchar(20) not null,
+    FOREIGN KEY (curpEstudiante) REFERENCES estudiantes(curp)
+);
+
+SELECT ca.*, es.nombre FROM calificaciones ca INNER JOIN estudiantes es ON ca.curpEstudiante = es.curp;
+
+DELETE FROM profesores WHERE curp="JASSO";
